@@ -149,18 +149,20 @@ const togglePopup = function () {
  * Обработчик кнопки подгрузки картинок
  * @param {MouseEvent} evt
  */
-const actionHandler = function (evt) {
-    evt.preventDefault();
-    const nextPage = evt.currentTarget.dataset.page;
-    evt.currentTarget.dataset.page = nextPage + 1;
+const actionHandler = function(evt) {
+  evt.preventDefault();
+  const nextPage = +evt.currentTarget.dataset.page;
+  evt.currentTarget.dataset.page = nextPage + 1;
 
-    if (nextPage > MAX_PAGE_IAMGES) {
-        console.warn(`WARN: You are trying to call a page that exceeds ${MAX_PAGE_IAMGES}`);
-        evt.currentTarget.disabled = true;
-    } else {
-        getPictures(nextPage);
-    }
-}
+  if (nextPage > MAX_PAGE_IAMGES) {
+    console.warn(
+      `WARN: You are trying to call a page that exceeds ${MAX_PAGE_IAMGES}`
+    );
+    evt.currentTarget.disabled = true;
+  } else {
+    getPictures(nextPage);
+  }
+};
 
 /**
  * Обработчик события click по картинкам.
