@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
-const action = document.querySelector('.action');
-const templateImageCard = document.querySelector('#image');
-const templateImagePopup = document.querySelector('#popup-image');
-const container = document.querySelector('.images');
+const action = document.querySelector(".action");
+const templateImageCard = document.querySelector("#image");
+const templateImagePopup = document.querySelector("#popup-image");
+const container = document.querySelector(".images");
 
-const popup = document.querySelector('.popup');
-const popupContainer = document.querySelector('.popup .content');
-const popupClose = document.querySelector('.popup .action');
-const loader = document.querySelector('.loader');
+const popup = document.querySelector(".popup");
+const popupContainer = document.querySelector(".popup .content");
+const popupClose = document.querySelector(".popup .action");
+const loader = document.querySelector(".loader");
 
 const MAX_PAGE_IAMGES = 34;
 let loaderTimeout;
@@ -17,10 +17,10 @@ let loaderTimeout;
  * Функция задаёт первоначальное состояние страницы.
  * Отправляется первый запрос за картинками, юез параметров т.к. с дефолтными настройками.
  */
-const initialState = function () {
-    action.disabled = false;
-    getPictures();
-}
+const initialState = function() {
+  action.disabled = false;
+  getPictures();
+};
 
 /**
  * Функция запрашивает картинки для галереи
@@ -28,32 +28,40 @@ const initialState = function () {
  * @param {number} page
  * @param {number} limit
  */
-const getPictures = function (page = 1, limit = 10) {
-    showLoader();
-    fetch(`https://picsum.photos/v2/list?page=${page};limit=${limit}`)
-        .then(function (response) {return response.json()})
-        .then(function (result) {renderPictures(result)})
-}
+const getPictures = function(page = 1, limit = 10) {
+  showLoader();
+  fetch(`https://picsum.photos/v2/list?page=${page};limit=${limit}`)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(result) {
+      renderPictures(result);
+    });
+};
 
 /**
  * Функция запрашивает информацию о конкретной картинке по её id
  * и вызывает ф-цию для отрисовки картинки в попапе
  * @param {number} id
  */
-const getPictureInfo = function (id = 0) {
-    showLoader();
-    fetch(`https://picsum.photos/id/${id}/info`)
-        .then(function (response) {return response.json()})
-        .then(function (result) {renderPopupPicture(result)})
-}
+const getPictureInfo = function(id = 0) {
+  showLoader();
+  fetch(`https://picsum.photos/id/${id}/info`)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(result) {
+      renderPopupPicture(result);
+    });
+};
 
 /**
  * Функция показывает индикатор загрузки.
  * Меняет ситили, ничего не возвращает.
  */
-const showLoader = function () {
-    loader.style.visibility = 'visible';
-}
+const showLoader = function() {
+  loader.style.visibility = "visible";
+};
 
 /**
  * Функция скрывает индикатор загрузки.
@@ -73,13 +81,13 @@ const hideLoader = function() {
  * @param {string} src
  * @param {number} size
  */
-const cropImage = function (src, size = 2) {
-    const [domain, key, id, width, height] = src.split('/').splice(2);
-    const newWidth = Math.floor(+width / size);
-    const newHeight = Math.floor(+height / size);
+const cropImage = function(src, size = 2) {
+  const [domain, key, id, width, height] = src.split("/").splice(2);
+  const newWidth = Math.floor(+width / size);
+  const newHeight = Math.floor(+height / size);
 
-    return `https://${domain}/${key}/${id}/${newWidth}/${newHeight}`;
-}
+  return `https://${domain}/${key}/${id}/${newWidth}/${newHeight}`;
+};
 
 /**
  * Функция копирует шаблон для каждой картинки,
@@ -116,30 +124,30 @@ const renderPictures = function(list) {
  * заполняет его и встраивает в попап
  * @param {object} picture
  */
-const renderPopupPicture = function (picture) {
-    const clone = templateImagePopup.content.cloneNode(true);
-    const img = clone.querySelector('img');
-    const link = clone.querySelector('a');
-    const author = clone.querySelector('.author');
+const renderPopupPicture = function(picture) {
+  const clone = templateImagePopup.content.cloneNode(true);
+  const img = clone.querySelector("img");
+  const link = clone.querySelector("a");
+  const author = clone.querySelector(".author");
 
-    img.src = cropImage(picture.download_url, 2);
-    img.alt = picture.author;
-    author.textContent = picture.author;
-    img.width = picture.width / 10;
-    link.href = picture.download_url;
+  img.src = cropImage(picture.download_url, 2);
+  img.alt = picture.author;
+  author.textContent = picture.author;
+  img.width = picture.width / 10;
+  link.href = picture.download_url;
 
-    popupContainer.innerHTML = '';
-    popupContainer.appendChild(clone)
-    hideLoader();
-    togglePopup();
-}
+  popupContainer.innerHTML = "";
+  popupContainer.appendChild(clone);
+  hideLoader();
+  togglePopup();
+};
 
 /**
  * Функция переклбчает класс открытия на попапе
  */
-const togglePopup = function () {
-    popup.classList.toggle('open');
-}
+const togglePopup = function() {
+  popup.classList.toggle("open");
+};
 
 /**
  * @type {object} MouseEvent
@@ -178,8 +186,8 @@ const imageHandler = function(evt) {
   }
 };
 
-action.addEventListener('click', actionHandler);
-container.addEventListener('click', imageHandler);
-popupClose.addEventListener('click', togglePopup);
+action.addEventListener("click", actionHandler);
+container.addEventListener("click", imageHandler);
+popupClose.addEventListener("click", togglePopup);
 
 initialState();
