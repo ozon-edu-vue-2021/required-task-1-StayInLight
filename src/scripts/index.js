@@ -170,13 +170,13 @@ const actionHandler = function(evt) {
  * для открытия попапа с ней
  * @param {MouseEvent} evt
  */
-const imageHandler = function (evt) {
-    evt.preventDefault();
+const imageHandler = function(evt) {
+  evt.preventDefault();
 
-    if (evt.target.closest('a')) {
-        getPictureInfo(evt.target.dataset.id);
-    }
-}
+  if (evt.target.closest("a")) {
+    getPictureInfo(evt.target.closest("a").dataset.id);
+  }
+};
 
 action.addEventListener('click', actionHandler);
 container.addEventListener('click', imageHandler);
