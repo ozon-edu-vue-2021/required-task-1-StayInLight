@@ -59,12 +59,12 @@ const showLoader = function () {
  * Функция скрывает индикатор загрузки.
  * Удаляет таймаут индикатора, ничего не возвращает.
  */
-const hideLoader = function () {
-    loaderTimeout = setTimeout(function () {
-        loader.style.visibility = 'hidden';
-        loaderTimeout.clearTimeout();
-    }, 700);
-}
+const hideLoader = function() {
+  loaderTimeout = setTimeout(function() {
+    loader.style.visibility = "hidden";
+    clearTimeout(loaderTimeout);
+  }, 700);
+};
 
 /**
  * Функция пропорционально делит размер картинки,
